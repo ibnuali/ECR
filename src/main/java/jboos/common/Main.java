@@ -1,20 +1,23 @@
 package jboos.common;
 
-import org.jboss.forge.roaster.Roaster;
-import org.jboss.forge.roaster.model.JavaUnit;
-import org.jboss.forge.roaster.model.source.JavaClassSource;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import com.github.javaparser.JavaParser;
+import com.github.javaparser.ast.CompilationUnit;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		// TODO Auto-generated method stub
-		Roaster.parse(JavaClassSource.class, "public class HelloWorld {}");
-		System.out.println(Roaster.class.getName());
-		
-		String javaCode = "public class MyClass{ private String field, String price;} public class AnotherClass {}";
+		// creates an input stream for the file to be parsed
+        FileInputStream in = new FileInputStream("C:/GitRepo/Proyek-3_ECR/src/main/java/jboos/common/HelloWorld.java");
 
-		JavaUnit unit = Roaster.parseUnit(javaCode);
-		System.out.println();
+        // parse it
+        CompilationUnit cu = JavaParser.parse(in);
+
+        // visit and print the methods names
+        new MethodVisitor().visit(cu, null);
 	}
 
 }
